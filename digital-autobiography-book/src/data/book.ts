@@ -8,7 +8,7 @@ export const book: BookData = {
   cover: {
     title: "கவிஞனின் கிறுக்கல்கள்",
     subtitle: "உணரப்படாத உணர்வுகளின் சில வரிகள்",
-    image: null, // e.g. "/images/cover.jpg"
+    image: "/images/cover.png", // e.g. "/images/cover.jpg"
   },
 
   publication: {
@@ -229,7 +229,9 @@ for so few.`,
   ],
 
   backCover: {
-    image: null,
+    image: "/images/back-cover.png", // e.g. "/images/back-cover.jpg"
+    // image: null, // e.g. "/images/back-cover.jpg"
+    imageMode: "background",
     text: `"Some feelings refuse to stay quiet."\n\nA debut collection of poems about memory, distance, and the small ordinary gods we build out of the people we love.`,
   },
 };

@@ -33,6 +33,7 @@ export interface Poem {
 
 export interface BackCoverData {
   image?: string | null;
+  imageMode?: "avatar" | "background";
   text?: string;
 }
 

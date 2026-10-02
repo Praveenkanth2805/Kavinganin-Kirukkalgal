@@ -114,33 +114,52 @@ export function BookCover({ variant }: BookCoverProps) {
   }
 
   /* ----------------------------- BACK ----------------------------- */
-  const initials = book.author.name
-    .split(" ")
-    .map((part) => part.charAt(0))
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
+  /* ----------------------------- BACK ----------------------------- */
+const initials = book.author.name
+  .split(" ")
+  .map((part) => part.charAt(0))
+  .join("")
+  .slice(0, 2)
+  .toUpperCase();
 
-  return (
-    <div
-      className="relative h-full w-full overflow-hidden text-[#f7e9ec]"
+const backBg = book.backCover.imageMode === "background" && book.backCover.image;
+
+return (
+  <div
+    className="relative h-full w-full overflow-hidden text-[#f7e9ec]"
+    style={{
+      background: backBg
+        ? undefined
+        : "radial-gradient(120% 90% at 75% 10%, #7b2940 0%, #651f32 46%, #3d111e 100%)",
+    }}
+  >
+    {/* background image */}
+    {backBg ? (
+      <>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={book.backCover.image as string}
+          alt={book.author.name}
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black/55" />
+      </>
+    ) : null}
+
+    <span
+      aria-hidden
+      className="absolute inset-y-0 right-0 z-10 w-5"
       style={{
         background:
-          "radial-gradient(120% 90% at 75% 10%, #7b2940 0%, #651f32 46%, #3d111e 100%)",
+          "linear-gradient(to left, rgba(0,0,0,0.5), rgba(255,255,255,0.07) 55%, rgba(0,0,0,0.18))",
       }}
-    >
-      <span
-        aria-hidden
-        className="absolute inset-y-0 right-0 z-10 w-5"
-        style={{
-          background:
-            "linear-gradient(to left, rgba(0,0,0,0.5), rgba(255,255,255,0.07) 55%, rgba(0,0,0,0.18))",
-        }}
-      />
+    />
 
-      <div className="relative z-20 flex h-full w-full flex-col items-center justify-between px-8 py-12 text-center sm:px-10 sm:py-16">
-        <div className="flex w-full flex-1 flex-col items-center justify-center">
-          {book.backCover.image ? (
+    <div className="relative z-20 flex h-full w-full flex-col items-center justify-between px-8 py-12 text-center sm:px-10 sm:py-16">
+      <div className="flex w-full flex-1 flex-col items-center justify-center">
+        {/* avatar — only when NOT background mode */}
+        {!backBg ? (
+          book.backCover.image ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={book.backCover.image}
@@ -151,26 +170,27 @@ export function BookCover({ variant }: BookCoverProps) {
             <div className="flex h-20 w-20 items-center justify-center rounded-full border border-white/25 bg-white/5 text-lg tracking-widest text-white/70 sm:h-24 sm:w-24">
               {initials}
             </div>
-          )}
+          )
+        ) : null}
 
-          <p className="mt-5 text-[0.65rem] uppercase tracking-[0.4em] text-white/80">
-            {book.author.name}
+        <p className="mt-5 text-[0.65rem] uppercase tracking-[0.4em] text-white/80 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
+          {book.author.name}
+        </p>
+
+        {book.backCover.text ? (
+          <p className="mt-7 max-w-xs whitespace-pre-line text-[0.72rem] leading-relaxed text-white/75 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] sm:text-xs">
+            {book.backCover.text}
           </p>
+        ) : null}
+      </div>
 
-          {book.backCover.text ? (
-            <p className="mt-7 max-w-xs whitespace-pre-line text-[0.72rem] leading-relaxed text-white/55 sm:text-xs">
-              {book.backCover.text}
-            </p>
-          ) : null}
-        </div>
-
-        <div className="mt-8 w-full">
-          <div className="mx-auto mb-5 h-px w-12 bg-white/20" />
-          <p className="text-[0.55rem] uppercase tracking-[0.4em] text-white/40">
-            {book.publishedDate}
-          </p>
-        </div>
+      <div className="mt-8 w-full">
+        <div className="mx-auto mb-5 h-px w-12 bg-white/30" />
+        <p className="text-[0.55rem] uppercase tracking-[0.4em] text-white/60">
+          {book.publishedDate}
+        </p>
       </div>
     </div>
-  );
+  </div>
+);
 }
