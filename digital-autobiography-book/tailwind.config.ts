@@ -5,8 +5,15 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        serif: ["var(--font-serif)", "Georgia", "serif"],
+        // English → Cormorant, Tamil → Kavivanar (auto fallback)
+        serif: [
+          "var(--font-serif)",
+          "var(--font-tamil)",
+          "Georgia",
+          "serif",
+        ],
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
+        tamil: ["var(--font-tamil)", "var(--font-serif)", "Georgia", "serif"],
       },
       colors: {
         burgundy: {

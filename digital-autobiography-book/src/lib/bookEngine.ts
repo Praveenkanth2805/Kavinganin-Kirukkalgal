@@ -18,6 +18,8 @@ export function buildPages(data: BookData): BookPage[] {
       title: poem.title,
       content: poem.content,
       image: poem.image ?? null,
+      imagePos: poem.imagePos ?? "top",
+      imageSize: poem.imageSize ?? "md",
     });
   });
 

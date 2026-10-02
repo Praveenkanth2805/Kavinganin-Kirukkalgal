@@ -1,27 +1,27 @@
 import type { BookData } from "@/types/book";
 
 export const book: BookData = {
-  title: "Between the Lines",
-  subtitle: "A collection of thoughts and poems",
+  title: "கவிஞனின் கிறுக்கல்கள்",
+  subtitle: "உணரப்படாத உணர்வுகளின் சில வரிகள்",
   publishedDate: "2026",
 
   cover: {
-    title: "Between the Lines",
-    subtitle: "A collection of thoughts and poems",
-    image: null,
+    title: "கவிஞனின் கிறுக்கல்கள்",
+    subtitle: "உணரப்படாத உணர்வுகளின் சில வரிகள்",
+    image: null, // e.g. "/images/cover.jpg"
   },
 
   publication: {
     date: "2026",
     publisher: "Self Published",
     edition: "Digital First Edition",
-    copyright: "© 2026 Praveenkanth. All rights reserved.",
+    copyright: "© 2026 Praveenkanth G. All rights reserved.",
     isbn: "",
   },
 
   author: {
-    name: "Praveenkanth",
-    image: null,
+    name: "Praveenkanth G",
+    image: null, // e.g. "/images/author.jpg"
     introduction: `I write because some feelings refuse to stay quiet.
 
 For most of my life I kept them folded neatly into the corners of notebooks — unfinished sentences, half-remembered evenings, names I never said out loud. This book is what happened when I finally let them out.
@@ -30,16 +30,21 @@ These pages are not a story with a beginning and an end. They are fragments. A t
 
 If you find a piece of yourself in any of these lines, then it was never only mine to begin with.
 
-— Praveenkanth`,
+— Praveenkanth G`,
   },
 
   poems: [
+    // ---------------------------------------------------------------
+    // imagePos  : "top" (default) | "bottom" | "left" | "right" | "background"
+    // imageSize : "sm" | "md" (default) | "lg"
+    // ---------------------------------------------------------------
+
     {
       id: "poem-001",
       title: "The Quiet Hours",
-      // Example: put a matching image here.
-      // image: "/images/quiet-hours.jpg",
       image: null,
+      imagePos: "top",
+      imageSize: "md",
       content: `There is a country
 that only exists
 between two and four in the morning,
@@ -60,6 +65,8 @@ I never said.`,
       id: "poem-002",
       title: "Inheritance",
       image: null,
+      imagePos: "top",
+      imageSize: "md",
       content: `My mother's hands
 knew the weight of water
 before they knew the weight of mine.
@@ -77,6 +84,8 @@ put them down.`,
       id: "poem-003",
       title: "Small Gods",
       image: null,
+      imagePos: "top",
+      imageSize: "md",
       content: `We made gods
 out of bus timetables
 and the sound of a key
@@ -98,6 +107,8 @@ it was.`,
       id: "poem-004",
       title: "What the River Kept",
       image: null,
+      imagePos: "top",
+      imageSize: "md",
       content: `I told the river
 everything.
 
@@ -119,6 +130,8 @@ you never made out loud.`,
       id: "poem-005",
       title: "Distance",
       image: null,
+      imagePos: "top",
+      imageSize: "md",
       content: `You are not far.
 
 You are exactly
@@ -138,6 +151,8 @@ for the rest of my life.`,
       id: "poem-006",
       title: "Growing Up",
       image: null,
+      imagePos: "top",
+      imageSize: "md",
       content: `I stopped asking
 why the sky was blue
 and started asking
@@ -157,6 +172,8 @@ looking back.`,
       id: "poem-007",
       title: "Home",
       image: null,
+      imagePos: "top",
+      imageSize: "md",
       content: `Home is not a place
 you return to.
 
@@ -176,6 +193,8 @@ has figured out why.`,
       id: "poem-008",
       title: "The Last Page",
       image: null,
+      imagePos: "top",
+      imageSize: "md",
       content: `If you have made it
 this far,
 thank you.
@@ -192,6 +211,20 @@ so many.
 
 And I have stayed
 for so few.`,
+    },
+    {
+      id: "poem-009",
+      title: "அவ்வளவும் அவள் தான்",
+      image: null,
+      imagePos: "top",
+      imageSize: "md",
+      content: `அவள் வந்தப்பிறகு
+ஏதும் மாறவில்லை
+என் உலகம்
+மட்டும்
+அவளாகவே
+மாறிவிட்டது
+அவ்வளவு தான்`,
     },
   ],
 

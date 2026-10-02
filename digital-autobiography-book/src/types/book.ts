@@ -2,6 +2,8 @@ export interface CoverData {
   title: string;
   subtitle?: string;
   image?: string | null;
+  /** Image irundha, text overlay kaatanumaa. Default: true */
+  showText?: boolean;
 }
 
 export interface PublicationData {
@@ -22,8 +24,11 @@ export interface Poem {
   id: string;
   title: string;
   content: string;
-  /** Optional image that matches the poem. */
   image?: string | null;
+  /** Default: "top" */
+  imagePos?: "top" | "bottom" | "left" | "right" | "background";
+  /** Default: "md" */
+  imageSize?: "sm" | "md" | "lg";
 }
 
 export interface BackCoverData {
@@ -60,6 +65,8 @@ export interface BookPage {
   title?: string;
   content?: string;
   image?: string | null;
+  imagePos?: "top" | "bottom" | "left" | "right" | "background";
+  imageSize?: "sm" | "md" | "lg";
 }
 
 export interface Leaf {

@@ -75,30 +75,114 @@ function AuthorPage() {
 }
 
 function ContentPage({ page }: { page: BookPage }) {
+  const pos = page.imagePos ?? "top";
+  const size = page.imageSize ?? "md";
+  const hasImage = Boolean(page.image);
+
+  /* ---------- sizes ---------- */
+  const stackSize: Record<string, string> = {
+    sm: "max-h-24 sm:max-h-32",
+    md: "max-h-40 sm:max-h-52",
+    lg: "max-h-56 sm:max-h-72",
+  };
+  const sideWidth: Record<string, string> = {
+    sm: "w-1/4",
+    md: "w-1/3",
+    lg: "w-2/5",
+  };
+
+  /* ---------- background mode ---------- */
+  if (hasImage && pos === "background") {
+    return (
+      <div className="relative h-full w-full overflow-hidden">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={page.image as string}
+          alt={page.title ?? ""}
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black/50" />
+
+        <div className="relative z-10 flex h-full w-full flex-col items-center justify-center px-8 py-10 text-center text-white sm:px-10 sm:py-12">
+          {page.title ? (
+            <>
+              <h2 className="text-base font-semibold tracking-wide drop-shadow sm:text-lg">
+                {page.title}
+              </h2>
+              <div className="mt-4 mb-6 h-px w-10 bg-white/50" />
+            </>
+          ) : null}
+          <p className="whitespace-pre-line text-center text-[0.82rem] leading-[2] drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)] sm:text-[0.9rem]">
+            {page.content}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  /* ---------- shared title ---------- */
+  const titleEl = page.title ? (
+    <>
+      <h2 className="text-center text-base font-semibold tracking-wide text-neutral-900 sm:text-lg">
+        {page.title}
+      </h2>
+      <div className="mx-auto mt-4 mb-6 h-px w-10 bg-neutral-300" />
+    </>
+  ) : null;
+
+  /* ---------- image element ---------- */
+  const imageEl = hasImage ? (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={page.image as string}
+      alt={page.title ?? ""}
+      className="object-contain"
+    />
+  ) : null;
+
+  /* ---------- side-by-side (left / right) ---------- */
+  if (pos === "left" || pos === "right") {
+    return (
+      <div className="flex h-full w-full flex-col px-8 py-10 sm:px-10 sm:py-12">
+        {titleEl}
+
+        <div
+          className={[
+            "flex flex-1 items-center justify-center gap-5 overflow-hidden",
+            pos === "right" ? "flex-row-reverse" : "flex-row",
+          ].join(" ")}
+        >
+          {hasImage ? (
+            <div className={`shrink-0 ${sideWidth[size]}`}>{imageEl}</div>
+          ) : null}
+
+          <div className="flex-1">
+            <p className="whitespace-pre-line text-center text-[0.82rem] leading-[2] text-neutral-800 sm:text-[0.9rem]">
+              {page.content}
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  /* ---------- stacked (top / bottom) — DEFAULT ---------- */
   return (
     <div className="flex h-full w-full flex-col px-8 py-10 sm:px-10 sm:py-12">
-      {page.title ? (
-        <>
-          <h2 className="text-center text-base font-semibold tracking-wide text-neutral-900 sm:text-lg">
-            {page.title}
-          </h2>
-          <div className="mx-auto mt-4 mb-6 h-px w-10 bg-neutral-300" />
-        </>
-      ) : null}
+      {titleEl}
 
-      <div className="flex flex-1 flex-col items-center justify-center overflow-hidden">
-        {page.image ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={page.image}
-            alt={page.title ?? ""}
-            className="mb-6 max-h-40 w-auto object-contain sm:max-h-52"
-          />
+      <div className="flex flex-1 flex-col items-center justify-center gap-4 overflow-hidden">
+        {hasImage && pos === "top" ? (
+          <div className={stackSize[size]}>{imageEl}</div>
         ) : null}
 
         <p className="whitespace-pre-line text-center text-[0.82rem] leading-[2] text-neutral-800 sm:text-[0.9rem]">
           {page.content}
         </p>
+
+        {hasImage && pos === "bottom" ? (
+          <div className={stackSize[size]}>{imageEl}</div>
+        ) : null}
       </div>
     </div>
   );
