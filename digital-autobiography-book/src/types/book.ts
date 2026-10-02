@@ -27,8 +27,9 @@ export interface Poem {
   image?: string | null;
   /** Default: "top" */
   imagePos?: "top" | "bottom" | "left" | "right" | "background";
-  /** Default: "md" */
-  imageSize?: "sm" | "md" | "lg";
+  /** "sm" | "md" | "lg" | number (px) | CSS string (e.g. "180px", "50%") */
+  imageSize?: "sm" | "md" | "lg" | number | string;
+  imageOffset?: number;
 }
 
 export interface BackCoverData {
@@ -67,7 +68,8 @@ export interface BookPage {
   content?: string;
   image?: string | null;
   imagePos?: "top" | "bottom" | "left" | "right" | "background";
-  imageSize?: "sm" | "md" | "lg";
+  imageSize?: "sm" | "md" | "lg" | number | string;
+  imageOffset?: number;
 }
 
 export interface Leaf {

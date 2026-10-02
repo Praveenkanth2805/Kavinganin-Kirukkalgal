@@ -20,6 +20,7 @@ export function buildPages(data: BookData): BookPage[] {
       image: poem.image ?? null,
       imagePos: poem.imagePos ?? "top",
       imageSize: poem.imageSize ?? "md",
+      imageOffset: poem.imageOffset ?? 0,
     });
   });
 

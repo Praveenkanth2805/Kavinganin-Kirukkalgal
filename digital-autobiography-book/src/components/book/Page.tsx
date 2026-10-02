@@ -77,21 +77,48 @@ function AuthorPage() {
 function ContentPage({ page }: { page: BookPage }) {
   const pos = page.imagePos ?? "top";
   const size = page.imageSize ?? "md";
+  const offset = page.imageOffset ?? 0;
   const hasImage = Boolean(page.image);
 
-  /* ---------- sizes ---------- */
-  const stackSize: Record<string, string> = {
-    sm: "max-h-24 sm:max-h-32",
-    md: "max-h-40 sm:max-h-52",
-    lg: "max-h-56 sm:max-h-72",
+  /* ---------- size resolver ---------- */
+  // Presets → return Tailwind classes (stacked: max-height, side: width %)
+  const presetStack: Record<string, string> = {
+    sm: "max-h-24 sm:max-h-32",   // 96 / 128
+    md: "max-h-40 sm:max-h-52",   // 160 / 208
+    lg: "max-h-56 sm:max-h-72",   // 224 / 288
   };
-  const sideWidth: Record<string, string> = {
+  const presetSide: Record<string, string> = {
     sm: "w-1/4",
     md: "w-1/3",
     lg: "w-2/5",
   };
 
-  /* ---------- background mode ---------- */
+  // Is `size` a preset string?
+  const isPreset = size === "sm" || size === "md" || size === "lg";
+
+  // Stacked wrapper classes
+  const stackedClass = isPreset
+    ? presetStack[size as string]
+    : ""; // custom → use inline style
+
+  // Side wrapper classes
+  const sideClass = isPreset ? presetSide[size as string] : "";
+
+  // Inline style for custom sizes
+  const customStyle: React.CSSProperties | undefined = !isPreset
+    ? {
+        // number → px, string → as-is
+        maxHeight: typeof size === "number" ? `${size}px` : size,
+        width:
+          pos === "left" || pos === "right"
+            ? typeof size === "number"
+              ? `${size}px`
+              : size
+            : undefined,
+      }
+    : undefined;
+
+  /* ---------- background ---------- */
   if (hasImage && pos === "background") {
     return (
       <div className="relative h-full w-full overflow-hidden">
@@ -102,7 +129,6 @@ function ContentPage({ page }: { page: BookPage }) {
           className="absolute inset-0 h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-black/50" />
-
         <div className="relative z-10 flex h-full w-full flex-col items-center justify-center px-8 py-10 text-center text-white sm:px-10 sm:py-12">
           {page.title ? (
             <>
@@ -120,7 +146,6 @@ function ContentPage({ page }: { page: BookPage }) {
     );
   }
 
-  /* ---------- shared title ---------- */
   const titleEl = page.title ? (
     <>
       <h2 className="text-center text-base font-semibold tracking-wide text-neutral-900 sm:text-lg">
@@ -130,22 +155,32 @@ function ContentPage({ page }: { page: BookPage }) {
     </>
   ) : null;
 
-  /* ---------- image element ---------- */
   const imageEl = hasImage ? (
     // eslint-disable-next-line @next/next/no-img-element
     <img
       src={page.image as string}
       alt={page.title ?? ""}
       className="object-contain"
+      style={{
+        transform:
+          pos === "top"
+            ? `translateY(${offset}px)`
+            : pos === "bottom"
+              ? `translateY(-${offset}px)`
+              : pos === "left"
+                ? `translateX(${offset}px)`
+                : pos === "right"
+                  ? `translateX(-${offset}px)`
+                  : undefined,
+      }}
     />
   ) : null;
 
-  /* ---------- side-by-side (left / right) ---------- */
+  /* ---------- side by side ---------- */
   if (pos === "left" || pos === "right") {
     return (
       <div className="flex h-full w-full flex-col px-8 py-10 sm:px-10 sm:py-12">
         {titleEl}
-
         <div
           className={[
             "flex flex-1 items-center justify-center gap-5 overflow-hidden",
@@ -153,9 +188,17 @@ function ContentPage({ page }: { page: BookPage }) {
           ].join(" ")}
         >
           {hasImage ? (
-            <div className={`shrink-0 ${sideWidth[size]}`}>{imageEl}</div>
+            <div
+              className={`shrink-0 ${sideClass}`}
+              style={
+                isPreset
+                  ? undefined
+                  : { width: customStyle?.width, maxWidth: "100%" }
+              }
+            >
+              {imageEl}
+            </div>
           ) : null}
-
           <div className="flex-1">
             <p className="whitespace-pre-line text-center text-[0.82rem] leading-[2] text-neutral-800 sm:text-[0.9rem]">
               {page.content}
@@ -166,14 +209,22 @@ function ContentPage({ page }: { page: BookPage }) {
     );
   }
 
-  /* ---------- stacked (top / bottom) — DEFAULT ---------- */
+  /* ---------- stacked (top / bottom) ---------- */
   return (
     <div className="flex h-full w-full flex-col px-8 py-10 sm:px-10 sm:py-12">
       {titleEl}
-
       <div className="flex flex-1 flex-col items-center justify-center gap-4 overflow-hidden">
         {hasImage && pos === "top" ? (
-          <div className={stackSize[size]}>{imageEl}</div>
+          <div
+            className={stackedClass}
+            style={
+              isPreset
+                ? undefined
+                : { maxHeight: customStyle?.maxHeight }
+            }
+          >
+            {imageEl}
+          </div>
         ) : null}
 
         <p className="whitespace-pre-line text-center text-[0.82rem] leading-[2] text-neutral-800 sm:text-[0.9rem]">
@@ -181,7 +232,16 @@ function ContentPage({ page }: { page: BookPage }) {
         </p>
 
         {hasImage && pos === "bottom" ? (
-          <div className={stackSize[size]}>{imageEl}</div>
+          <div
+            className={stackedClass}
+            style={
+              isPreset
+                ? undefined
+                : { maxHeight: customStyle?.maxHeight }
+            }
+          >
+            {imageEl}
+          </div>
         ) : null}
       </div>
     </div>

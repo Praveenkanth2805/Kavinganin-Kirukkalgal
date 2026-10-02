@@ -8,7 +8,7 @@ export const book: BookData = {
   cover: {
     title: "கவிஞனின் கிறுக்கல்கள்",
     subtitle: "உணரப்படாத உணர்வுகளின் சில வரிகள்",
-    image: "/images/cover.png", // e.g. "/images/cover.jpg"
+    image: "/images/cover.png",
   },
 
   publication: {
@@ -21,7 +21,7 @@ export const book: BookData = {
 
   author: {
     name: "Praveenkanth G",
-    image: null, // e.g. "/images/author.jpg"
+    image: null,
     introduction: `I write because some feelings refuse to stay quiet.
 
 For most of my life I kept them folded neatly into the corners of notebooks — unfinished sentences, half-remembered evenings, names I never said out loud. This book is what happened when I finally let them out.
@@ -35,8 +35,9 @@ If you find a piece of yourself in any of these lines, then it was never only mi
 
   poems: [
     // ---------------------------------------------------------------
-    // imagePos  : "top" (default) | "bottom" | "left" | "right" | "background"
-    // imageSize : "sm" | "md" (default) | "lg"
+    // imagePos    : "top" (default) | "bottom" | "left" | "right" | "background"
+    // imageSize   : "sm" | "md" (default) | "lg" | number (px) | "180px" | "50%"
+    // imageOffset : number (px). + = keezha/right, − = mela/left
     // ---------------------------------------------------------------
 
     {
@@ -215,8 +216,9 @@ for so few.`,
     {
       id: "poem-009",
       title: "அவ்வளவும் அவள் தான்",
-      image: null,
+      image: "/images/aval-ulagam.png",
       imagePos: "top",
+      imageOffset: -30,
       imageSize: "md",
       content: `அவள் வந்தப்பிறகு
 ஏதும் மாறவில்லை
@@ -229,8 +231,7 @@ for so few.`,
   ],
 
   backCover: {
-    image: "/images/back-cover.png", // e.g. "/images/back-cover.jpg"
-    // image: null, // e.g. "/images/back-cover.jpg"
+    image: "/images/back-cover.png",
     imageMode: "background",
     text: `"Some feelings refuse to stay quiet."\n\nA debut collection of poems about memory, distance, and the small ordinary gods we build out of the people we love.`,
   },
